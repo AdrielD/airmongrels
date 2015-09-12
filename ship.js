@@ -5,6 +5,8 @@
 		var posx = 0;
 		var posy = 0;
 		var speed = 7;
+		var fireHate = 6;
+		var cooldown = 0;
 
 		this.setPosition = function(x, y) {
 			posx = x;
@@ -40,6 +42,18 @@
 		this.getSpeed = function() {
 			return speed;
 		};
+
+		this.countCooldown = function() {
+			if (cooldown >= fireHate) {
+				cooldown = 0;
+			} else {
+				cooldown++;
+			}
+		}
+
+		this.isInCooldown = function() {
+			return cooldown > 0;
+		}
 	}
 
 	context.Ship = Ship;
