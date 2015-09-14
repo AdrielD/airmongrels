@@ -84,7 +84,6 @@ function StartGame() {
 				var eDown = ePos.y+50;
 
 				if((bLeft >= eLeft && bLeft <= eRight && bUp <= eDown) || (bRight <= eLeft && bRight >= eRight && bUp <= eDown)) {
-					console.log("COLLISION!");
 					bullets[b].destroy();
 					enemies[e].destroy();
 					score++;
