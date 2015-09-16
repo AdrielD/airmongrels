@@ -10,3 +10,9 @@ TODO:
 - boss fight
 - deploy mines
 - bomb
+
+ENGINE:
+- Entities
+- Sprites / DOMSprites
+- Levels
+- 
