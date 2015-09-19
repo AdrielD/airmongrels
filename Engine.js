@@ -20,23 +20,41 @@ function Engine() {
 		current: null,
 	}
 
-	function loop(timestamp) {
-		update(timestamp);
-		render(timestamp);
-		requestAnimationFrame(loop);
+	function Ship() {
+		this.image = document.createElement("img");
+		this.image.setAttribute("src", "images/ship1.png");
+
+		this.x = 0;
+		this.y = 0;
+		this.width = 50;
+		this.height = 50;
 	}
 
-	function render(frameTime) {
-		// console.log("rendering! ");
+	var player = new Ship();
+	player.x = SCREEN_WIDTH/2 - 25;
+	player.y = SCREEN_BOTTOM_EDGE - 50;
+	gameLayer.addDrawable(player);
+
+	function loop(timestamp) {
+		requestAnimationFrame(loop);
+		update(timestamp);
+		render(timestamp);
 	}
 
 	function update(frameTime) {
-		// console.log("updating! ");
+		if(gameControls.leftKey()) player.x -= 5;
+		if(gameControls.rightKey()) player.x += 5;
+		if(gameControls.upKey()) player.y -= 5;
+		if(gameControls.downKey()) player.y += 5;
+	}
+
+	function render(frameTime) {
+		gameLayer.clearLayer();
+		gameLayer.draw();
 	}
 
 	this.start = function() {
 		console.log("started!");
-		gameLayer.clearLayer();
 		gameState.current = gameState.STARTED;
 		requestAnimationFrame(loop);
 	};
