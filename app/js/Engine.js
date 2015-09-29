@@ -1,6 +1,6 @@
-console.log("Engine loaded");
-
-var Engine = {};
+function Engine() {
+	
+}
 // window.onload = function() {
 // 	new Engine().start();
 // }

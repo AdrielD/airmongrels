@@ -1,40 +1,16 @@
-;(function() {
-	console.log("Game initialized");
+window.addEventListener('DOMContentLoaded', function() {
+	console.log("start!");
 
-	var airmongrels = airmongrels || {};
-	var dependencies = ["Engine", "Controls", "Layer"];
+	var SCREEN_WIDTH = 800;
+	var SCREEN_HEIGHT = 640;
 
-	function loadDependencies() {
-		for(var i = 0; i < dependencies.length; i++) {
-			var script = document.createElement("script");
-			script.src = "js/" + dependencies[i] + ".js";
-			script.async = false;
-			document.head.appendChild(script);
-		}
-	}
+	var gameLayer = new Layer("gameLayer", "container", SCREEN_WIDTH, SCREEN_HEIGHT);
+	gameLayer.clear();
 
-	var loadAnimation = loadAnimation || {
-		element: null,
-		animation: 0,
-		start: function() {
-			loadAnimation.element = document.getElementById("loading-animation"),
-			loadAnimation.element.innerHTML = "Loading";
-			loadAnimation.animation = setInterval(function() {
-				loadAnimation.element.innerHTML += ".";
-			}, 10);
-		},
-		stop: function() {
-			clearInterval(loadAnimation.animation);
-			loadAnimation.element.innerHTML += " and loaded!";
-		}
-	}
+	var ship = new spawnPlayer();
+	ship.setPosition(300, 100);
 
-	window.addEventListener('load', function() {
-		loadAnimation.start();
-
-		setTimeout(function() {
-			loadDependencies();
-			loadAnimation.stop();
-		}, 100);
-	});
-})();
+	setTimeout(function() {
+		gameLayer.draw([ship]);
+	}, 100);
+});

@@ -1,30 +1,24 @@
-console.log("Layers loaded");
+function Layer(id, parentId, width, height) {
+	var parent = document.getElementById(parentId);
+	var layer = document.createElement("canvas");
+	layer.id = id;
+	layer.width = width;
+	layer.height = height;
+	parent.appendChild(layer);
 
-var Layer = {};
-// function Layer(id, width, height) {
-	
-// 	var layerDOM = document.getElementById(id);
-// 	var context = layerDOM.getContext("2d");
-// 	var defaultColor = "#000000";
+	var context = layer.getContext("2d");
+	var sprites = [];
 
-// 	layerDOM.width = width;
-// 	layerDOM.height = height;
+	this.clear = function() {
+		context.fillStyle = "#000000";
+		context.fillRect(0, 0, layer.width, layer.height);
+		return this;
+	};
 
-// 	var drawables = [];
-
-// 	this.addDrawable = function(entity) {
-// 		drawables.push(entity);
-// 	};
-
-// 	this.draw = function() {
-// 		for(var i in drawables) {
-// 			var obj = drawables[i]
-// 			context.drawImage(obj.image, obj.x, obj.y, obj.width, obj.height);
-// 		}
-// 	};
-
-// 	this.clearLayer = function() {	
-// 		context.fillColor = defaultColor;
-// 		context.fillRect(0, 0, layerDOM.width, layerDOM.height);
-// 	};
-// }
+	this.draw = function(entities) {
+		for(var i = 0; i < entities.length; i++) {
+			var e = entities[i];
+			context.drawImage(e.image, e.x, e.y, e.width, e.height);
+		}
+	};
+}

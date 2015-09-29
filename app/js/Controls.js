@@ -1,6 +1,7 @@
-console.log("Controls loaded");
+function Controls() {
 
-var Controls = {};
+}
+
 // function Controls() {
 // 	var left = false;
 // 	var right = false;
