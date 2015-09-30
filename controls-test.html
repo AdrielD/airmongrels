@@ -1,0 +1,142 @@
+<body>
+<script>
+	var x = 0;
+	var y = 0;
+	var speed = 5;
+	var cube = document.createElement("div");
+	cube.style.position = "absolute";
+	cube.style.backgroundColor = "#000";
+	cube.style.width = "50px";
+	cube.style.height = "50px";
+	cube.style.left = x+"px";
+	cube.style.top = y+"px";
+	document.body.appendChild(cube);
+
+	function setPosition() {
+		cube.style.left = x+"px";
+		cube.style.top = y+"px";
+	}
+
+	var keyCodeTable = {
+		32: "space",
+		37: "left",
+		38: "up",
+		39: "right",
+		40: "down",
+	};
+
+	var keys = {
+		up: new Key("Up Arrow"),
+		down: new Key("Down Arrow"),
+		right: new Key("Right Arrow"),
+		left: new Key("Left Arrow"),
+	};
+
+	keys.up.onkeydown = function() {
+		this.pressed = this.holding = true;
+		if(keys.down.pressed) {
+			keys.down.pressed = false;
+			keys.down.holding = true;
+		}
+	};
+
+	keys.up.onkeyup = function() {
+		this.pressed = this.holding = false;
+		if(keys.down.holding) {
+			keys.down.pressed = true;
+		}
+	};
+
+	keys.down.onkeydown = function() {
+		this.pressed = this.holding = true;
+		if(keys.up.pressed) {
+			keys.up.pressed = false;
+			keys.up.holding = true;
+		}
+	};
+
+	keys.down.onkeyup = function() {
+		this.pressed = this.holding = false;
+		if(keys.up.holding) {
+			keys.up.pressed = true;
+		}
+	};
+
+	keys.left.onkeydown = function() {
+		this.pressed = this.holding = true;
+		if(keys.right.pressed) {
+			keys.right.pressed = false;
+			keys.right.holding = true;
+		}
+	};
+
+	keys.left.onkeyup = function() {
+		this.pressed = this.holding = false;
+		if(keys.right.holding) {
+			keys.right.pressed = true;
+		}
+	};
+
+	keys.right.onkeydown = function() {
+		this.pressed = this.holding = true;
+		if(keys.left.pressed) {
+			keys.left.pressed = false;
+			keys.left.holding = true;
+		}
+	};
+
+	keys.right.onkeyup = function() {
+		this.pressed = this.holding = false;
+		if(keys.left.holding) {
+			keys.left.pressed = true;
+		}
+	};
+
+	function Key(name) {
+		this.name = name;
+		this.pressed = false;
+		this.holding = false;
+	}
+	Key.prototype.onkeydown = function() {
+		console.log(this.name + " pressed");
+	}
+	Key.prototype.onkeyup = function() {
+		console.log(this.name + " released");
+	}
+
+	function handleKeyInput(event) {
+		var code = keyCodeTable[event.keyCode];
+		var action = "on"+event.type;
+
+		if(keys[code]) {
+			event.preventDefault();
+			keys[code][action]();
+		}
+	}
+
+	document.addEventListener("keydown", handleKeyInput);
+	document.addEventListener("keyup", handleKeyInput);
+
+	setInterval(function() {
+		if(keys.up.pressed) {
+			console.log("up");
+			y -= speed;
+		}
+		if(keys.down.pressed) {
+			console.log("down");
+			y += speed;
+		}
+		if(keys.left.pressed) {
+			console.log("up");
+			x -= speed;
+		}
+		if(keys.right.pressed) {
+			console.log("down");
+			x += speed;
+		}
+
+		setPosition();
+	}, 1000/60)
+
+</script>
+</body>
